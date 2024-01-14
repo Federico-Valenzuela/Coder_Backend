@@ -22,13 +22,14 @@ class UsersManager {
   }
   async createUser(data) {
     try {
-      if (!data.name || !data.email) {
-        throw new Error("Name & Email are required");
-      }
+      // if (!data.name || !data.email || !data.prhoto) {
+      //   throw new Error("Name & Email are required");
+      // }
       const user = {
         id: crypto.randomBytes(12).toString("hex"),
         name: data.name,
         email: data.email,
+        photo: data.photo
       };
       this.users.push(user);
       const jsonData = JSON.stringify(this.users, null, 2);
@@ -67,11 +68,30 @@ class UsersManager {
       return error.message;
     }
   }
+
+  async upDateUsers(uid, dataEmail,) {
+    try {
+      const one = this.readUserById(uid);
+      if (one) {
+        one.email = dataEmail;
+        const jsonData = JSON.stringify(this.users, null, 2);
+        await fs.promises.writeFile(this.path, jsonData);
+        console.log(`update user ${uid,one.email}`)
+        return  one.email 
+      }else{
+        throw new Error("There isn't any user");
+      }
+    } catch (error) {
+      console.log(error.message);
+      return error.message;
+    }
+  }
+
   async removeUserById(id) {
     try {
       let one = this.users.find((each) => each.id === id);
       if (!one) {
-        throw new Error("There isn't any event");
+        throw new Error("There isn't any user");
       } else {
         this.users = this.users.filter((each) => each.id !== id);
         const jsonData = JSON.stringify(this.users, null, 2);
@@ -86,5 +106,6 @@ class UsersManager {
   }
 }
 
-const users = new UsersManager("./data/fs/files/users.json");
+const users = new UsersManager("./src/data/fs/files/users.json");
+
 export default users;

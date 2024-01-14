@@ -1,6 +1,7 @@
 import fs from "fs";
 import crypto from "crypto";
 
+
 class EventsManager {
   static #perGain = 0.3;
   static #totalGain = 0;
@@ -26,9 +27,9 @@ class EventsManager {
   }
   async createEvent(data) {
     try {
-      if (!data.name || !data.place) {
-        throw new Error("Name & Place are required");
-      }
+      // if (!data.name || !data.place) {
+      //   throw new Error("Name & Place are required");
+      // }
       const event = {
         id: crypto.randomBytes(12).toString("hex"),
         name: data.name,
@@ -118,5 +119,5 @@ class EventsManager {
   }
 }
 
-const events = new EventsManager("./data/fs/files/events.json");
+const events = new EventsManager("./src/data/fs/files/events.json");
 export default events;
