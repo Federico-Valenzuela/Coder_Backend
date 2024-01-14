@@ -12,9 +12,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Federico-Valenzuela/Coder_Backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Federico-Valenzuela/Coder_Backend/issues"
+  },
+  "homepage": "https://github.com/Federico-Valenzuela/Coder_Backend#readme"
 }

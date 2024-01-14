@@ -1,5 +1,8 @@
+import crypto from 'crypto';
+
 class ProductManager {
-    static idProduct = 0
+  static id= 0
+    
     constructor() {
         this.products = [];
     }
@@ -19,11 +22,14 @@ class ProductManager {
         price,
         stock,
         };
-        product.id = ProductManager.idProduct++
-
+        //product.id = crypto.randomBytes(12).toString("hex")
+        product.id = ProductManager.id++;
         this.products.push(product);
         return product;
     }
+    readP() {
+      return this.products;
+  }
   
     readOneP(id) {
         const product = this.products.find((product) => product.id === id);
@@ -43,15 +49,32 @@ class ProductManager {
           return id;
         }
     }
+  upDate(id, dataTitle, dataPhoto, dataPrice, dataStock) {
+  
+    const one = this.readOneP(id);
+    if (one) {
+      one.title = dataTitle; 
+      one.price = dataPrice; 
+      one.stock = dataStock;
+      one.Photo = dataPhoto;  
+      console.log('modificado user id :'+ id)
+      console.log(this.users)
+    }else{
+      console.log("no existe el id  ");
+    }
+  }
 }
 
 const managerP = new ProductManager()
 managerP.createDataP('pera','ruta de foto', 10, 20)
 managerP.createDataP('silla','ruta de foto', 30, 40)
 managerP.createDataP('mesa','ruta de foto',50, 60)
-console.log(managerP.readP());
-console.log(managerP.readOneP(2))
+//console.log(managerP.readP(1));
+console.log(managerP.readP())
 managerP.removeProductById(2)
+managerP.readP()
+managerP.upDate(1,'xx', 'yyyy','zzzz', 40)
+
  
  
  

@@ -1,12 +1,13 @@
+
+import crypto from 'crypto';
 class UserManager {
-  static idUser = 0
+  static id = 0
+  
   constructor() {
   this.users = [];
   }
  
-  readU() {
-      return this.users;
-  }
+  
  
   createDataU( name, photo, email) {
       if (!name || !photo || !email ) {
@@ -17,11 +18,16 @@ class UserManager {
       photo,
       email
       };
-      user.id = UserManager.idUser++
+      user.id = UserManager.id++
+      //user.id = crypto.randomBytes(12).toString("hex")
 
       this.users.push(user);
       return user;
   }
+  readU() {
+    console.log(this.users)
+    return this.users;
+}
  
   readOneU(id) {
       const user = this.users.find((user) => user.id === id);
@@ -42,13 +48,33 @@ class UserManager {
       return id;
     }
   }
+  upDate(id, dataName, dataPhoto, dataEmail) {
+    const one = this.readOneU(id);
+    if (one) {
+      one.name = dataName; 
+      one.photo = dataPhoto; 
+      one.mail=dataEmail;
+      console.log('modificado user id :'+ id)
+      console.log(this.users)
+    }else{
+      console.log("no existe el id  ");
+    }
+  }  
 }
 
+
 const managerU = new UserManager()
+
 managerU.createDataU('fede','ruta de foto', 'email')
 managerU.createDataU('yesi','ruta de foto', 'email')
 managerU.createDataU('edu','ruta de foto','email')
-console.log(managerU.readU());
-console.log(managerU.readOneU(2))
+managerU.readU()
+
+console.log(managerU.readOneU(2));
+
+//console.log(managerU.readOneU('7c45a54ad456174daf428007'));
+//console.log(managerU.readOneU(9))
 managerU.removeUserById(2)
+managerU.readU()
+managerU.upDate(1,'xx', 'yyyy','zzzz', 'aaaa')
 

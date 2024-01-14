@@ -22,13 +22,15 @@ class ProductManager {
   }
   async createProduct(data) {
     try {
-      if (!data.name || !data.place) {
-        throw new Error("Name & Place are required");
-      }
+      // if (!data.title || !data.photo || !data.price || !data.stock) {
+      //   throw new Error("Name & Place are required");
+      // }
       const product = {
         id: crypto.randomBytes(12).toString("hex"),
-        name: data.name,
-        place: data.place,
+        title: data.title,
+        photo: data.photo,
+        price: data.price,
+        stock: data.stock,
       };
       this.products.push(product);
       const jsonData = JSON.stringify(this.products, null, 2);
@@ -67,6 +69,26 @@ class ProductManager {
       return error.message;
     }
   }
+  async upDateProduct(pid, dataStock,dataPrice) {
+    try {
+      const one = this.readProductById(pid);
+      if (one) {
+        one.stock = dataStock;
+        one.price = dataPrice;
+        const jsonData = JSON.stringify(this.products, null, 2);
+        await fs.promises.writeFile(this.path, jsonData);
+        console.log(`update product ${pid,one.stock,one.price}`)
+        return  one.stock + one.price
+      }else{
+        throw new Error("There isn't any product");
+      }
+    } catch (error) {
+      console.log(error.message);
+      return error.message;
+    }
+  }
+
+
   async removeProductById(id) {
     try {
       let one = this.products.find((each) => each.id === id);
@@ -86,5 +108,5 @@ class ProductManager {
   }
 }
 
-const products = new ProductManager("./data/fs/files/products.json");
+const products = new ProductManager("./src/data/fs/files/products.json");
 export default products;
