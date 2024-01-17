@@ -1,0 +1,30 @@
+
+{{!-- diseño de pagina web de inicio
+desde el endpoint me envian el
+objeto con la propiedad EVENTOS
+para loopear la sintaxis de each de hbs 
+--}}
+
+
+
+
+<main>
+    <h1>PAGINA DE EVENTOS</h1>
+
+    <h3>{{date}}</h3>
+
+    {{#if details}}
+    <p>{{details}}</p>
+    {{else}}
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio vitae provident maiores quidem voluptatem eos veniam est! Nemo asperiores libero animi molestias, cumque minima tenetur suscipit, aperiam earum quos expedita?</p>
+    {{/if}}
+
+    {{#each events}}
+    {{!-- cuerpo q se loopear
+    this a referencia de c/u de los elementos
+     a recorrer
+    --}}
+    <h3>{{this}}</h3>
+    {{/each}} 
+
+</main>
