@@ -1,1 +1,30 @@
-[]
+[
+  {
+    "id": "08701e62b60c8d8f113a4b48",
+    "title": "Argentina",
+    "photo": "https://img2.freepng.es/20180709/bjx/kisspng-argentina-national-football-team-t-shirt-2018-worl-messi-2018-argentina-5b43272f6c06e9.6909877515311275994425.jpg",
+    "price": 100,
+    "stock": 10
+  },
+  {
+    "id": "54701e62b60c2d8f113a4b41",
+    "title": "Chile",
+    "photo": "https://www.sportingplus.net/5550-thickbox_default/camiseta-de-futbol-chile-seleccion-local-201415-alexis-7-puma.jpg",
+    "price": 200,
+    "stock": 10
+  },
+  {
+    "id": "62701e62b60c2d8f113a4b12",
+    "title": "Brasil",
+    "photo": "https://cdn-icons-png.flaticon.com/512/1031/1031377.png",
+    "price": 300,
+    "stock": 10
+  },
+  {
+    "id": "90701e62b60c2d8f113a4g67",
+    "title": "Uruguay",
+    "photo": "https://1.bp.blogspot.com/-CtMFBjjyryk/U1jbKfGC7qI/AAAAAAAABZU/ac2HucbsakY/s1600/Nueva_camiseta_del_Uruguay_segunda_para_el_Mundial_Brasil_2014_4.jpg",
+    "price": 400,
+    "stock": 10
+  }
+]

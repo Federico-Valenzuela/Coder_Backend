@@ -1,9 +1,17 @@
 [
   {
     "id": "e8c4ddf190ff1902dd3d01d0",
-    "name": "hp",
+    "title": "hp",
     "place": "hoyts",
-    "price": 10,
+    "img": "https://img.ecartelera.com/noticias/53400/53400-m.jpg",
+    "capacity": 40,
+    "date": "2024-01-13T19:53:09.539Z"
+  },
+  {
+    "id": "e8c4ddf190ff1902dd3d01d0",
+    "title": "hp",
+    "place": "hoyts",
+    "img": "https://img.ecartelera.com/noticias/53400/53400-m.jpg",
     "capacity": 40,
     "date": "2024-01-13T19:53:09.539Z"
   }
