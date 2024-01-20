@@ -1,0 +1,49 @@
+
+{{!-- diseño de pagina web de inicio
+desde el endpoint me envian el
+objeto con la propiedad PRODUCTOS
+para loopear la sintaxis de each de hbs 
+--}}
+
+
+
+
+<main>
+    <div class="d-flex flex-wrap justify-content-evenly">
+        <h1>BIENVENIDO A SOCCER</h1>
+    
+        <p>
+            <img
+                id="logo"
+                src="https://www.regaloempresas.com/productosg/alta/19544168.JPG"
+                alt="logo">
+        </p>
+    </div>
+    <div><p class="d-flex flex-wrap justify-content-evenly">Mira todos nuestro productos al mejor precio!</p></div>
+    {{!-- <h3>{{date}}</h3> --}}
+
+    {{!-- {{#if details}}
+    <p>{{details}}</p>
+    {{else}}
+    <p>Mira todos nuestro productos al mejor precio!</p>    
+    {{/if}} --}}
+
+
+
+
+
+    
+    <div class= 'd-flex flex-wrap justify-content-evenly'>
+    {{#each products}}
+<div class="card" style="width: 18rem;">
+  <img src="{{this.photo}}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{this.title}}</h5>
+    <p class="card-text">camiseta</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+{{/each}}
+</div>
+
+</main>

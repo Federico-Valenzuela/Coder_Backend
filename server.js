@@ -1,29 +1,60 @@
 import express from "express";
+import {createServer} from "http";
+import {Server} from "socket.io"
+import morgan from "morgan";
+import {engine} from "express-handlebars"
+import products from "./src/data/fs/products.fs.js";
+
+import __dirname from "./utils.js";
 import router from "./src/routers/router.index.js" ;
 import errorHandler from "./src/middlwares/errorHandler.mid.js";
 import pathHandler from "./src/middlwares/pathHandler.mid.js";
-import __dirname from "./utils.js";
-import morgan from "morgan";
 
 
-
-import events from "./src/data/fs/events.fs.js";
+/*import events from "./src/data/fs/events.fs.js";
 import users from "./src/data/fs/users.fs.js";
 import products from "./src/data/fs/products.fs.js";
 import orders from "./src/data/fs/orders.fs.js";
-
+*/
 const server = express();
 
 const PORT = 8000;
 const ready = console.log("server ready on port " + PORT);
-server.listen(PORT, ready);
+//server.listen(PORT, ready);
+const httpServer = createServer(server)
+const socketServer = new Server(httpServer)
+httpServer.listen(PORT, ready);
+socketServer.on("connection",(socket)=>{
+  console.log(socket.id)
+  socket.emit("Welcome","welcome a soccer")
+  socket.emit("camisetas", products.readProducts())
+
+  socket.on("NewCamiseta",async(data)=>{
+    try {
+      console.log(data)
+      await products.createProduct(data)
+      socket.emit("camisetas", products.readProducts())
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  )
+})
+
+
+//templates
+server.engine("handlebars",engine())
+server.set("view engine", "handlebars")
+server.set("views", __dirname+"/src/views")
 
 //middlewares
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
-server.use(express.static(__dirname + "/public"))
-server.use(morgan("dev"))
-server.use('/', router);
+server.use(express.static(__dirname + "/public"));
+server.use(morgan("dev"));
+
+
+server.use("/", router);
 server.use(errorHandler);
 server.use(pathHandler);
 
