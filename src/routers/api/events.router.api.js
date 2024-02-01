@@ -1,5 +1,6 @@
 import { Router } from "express";
-import events from "../../data/fs/events.fs.js";
+//import events from "../../data/fs/events.fs.js";
+import { events} from "../../data/mongo/manager.mongo.js";
 import propsEvents from "../../middlwares/propsEvents.mid.js"
 
 const eventsRouter = Router();
@@ -7,7 +8,7 @@ const eventsRouter = Router();
 eventsRouter.post("/", propsEvents, async (req, res, next) => {
   try {
     const data = req.body;
-    const response = await events.createEvent(data);
+    const response = await events.create(data);
     return res.json({
       statusCode: 201,
       response,
@@ -19,7 +20,9 @@ eventsRouter.post("/", propsEvents, async (req, res, next) => {
 
 eventsRouter.get("/", async (req, res, next) => {
   try {
-    const all = await events.readEvents();
+    const filter = {category: req.query.category} //{category : undefined} ==! category{}
+    const order = {order: req.query.order} //{name : undefined} ==! name{}
+    const all = await events.read({filter:{}, order:{}});
     return res.json({
       statusCode: 200,
       response: all,
@@ -32,7 +35,7 @@ eventsRouter.get("/", async (req, res, next) => {
 eventsRouter.get("/:eid", async (req, res, next) => {
   try {
     const { eid } = req.params;
-    const one = await events.readEventById(eid);
+    const one = await events.readOne(eid);
     return res.json({
       statusCode: 200,
       response: one,
@@ -45,7 +48,7 @@ eventsRouter.get("/:eid", async (req, res, next) => {
 eventsRouter.put("/:eid/:quantity", async (req, res, next) => {
   try {
     const { eid, quantity } = req.params;
-    const response = await events.soldticket(quantity, eid);
+    const response = await events.update(quantity, eid);
     return res.json({
       statusCode: 200,
       response: "capacity available: " + response,
@@ -58,7 +61,7 @@ eventsRouter.put("/:eid/:quantity", async (req, res, next) => {
 eventsRouter.delete("/:eid", async (req, res, next) => {
   try {
     const { eid } = req.params;
-    const response = await events.removeEventById(eid);
+    const response = await events.destroy(eid);
     return res.json({
       statusCode: 200,
       response,
