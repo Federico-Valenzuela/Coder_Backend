@@ -1,14 +1,17 @@
 import { Router } from "express";
-import users from "../../data/fs/users.fs.js";
+//import users from "../../data/fs/users.fs.js";
 import propsUsers from "../../middlwares/propsUsers.mid.js"
+import { users } from "../../data/mongo/manager.mongo.js";
 //
+
+
 
 const usersRouter = Router();
 
-usersRouter.post("/", propsUsers ,async (req, res, next) => {
+usersRouter.post("/" ,async (req, res, next) => {
   try {
     const data = req.body;
-    const response = await users.createUser(data);
+    const response = await users.create(data);
     return res.json({
       statusCode: 201,
       response,
@@ -20,7 +23,35 @@ usersRouter.post("/", propsUsers ,async (req, res, next) => {
 //
 usersRouter.get("/", async (req, res, next) => {
   try {
-    const all = await users.readUsers();
+    const orderAndPaginate = {
+      limit: req.query.limit || 3,
+      page: req.query.page || 1,
+      sort:{ name: 1}
+      
+    }
+    const filter = {}
+    if(req.query.email) {
+      filter.email = new RegExp(req.query.email.trim(), 'i')
+    }
+    if(req.query.email==="desc") {
+      orderAndPaginate.sort.name  = 1
+    }
+    else{
+      orderAndPaginate.sort.name = -1
+    }
+    const all = await users.read({filter,orderAndPaginate});
+    return res.json({
+      statusCode: 200,
+      response: all,
+    });
+  } catch (error) {
+    return next(error);
+  }
+});
+
+usersRouter.get("/stats", async (req, res, next) => {
+  try {
+    const all = await users.stats({});
     return res.json({
       statusCode: 200,
       response: all,
@@ -33,7 +64,7 @@ usersRouter.get("/", async (req, res, next) => {
 usersRouter.get("/:uid", async (req, res, next) => {
   try {
     const { uid } = req.params;
-    const one = await users.readUserById(uid);
+    const one = await users.readOne(uid);
     return res.json({
       statusCode: 200,
       response: one,
@@ -43,13 +74,14 @@ usersRouter.get("/:uid", async (req, res, next) => {
   }
 });
 
-usersRouter.put("/:uid/:email", async (req, res, next) => {
+usersRouter.put("/:uid", async (req, res, next) => {
   try {
-    const { uid, email } = req.params;
-    const response = await users.upDateUsers(uid, email);
+    const { uid } = req.params;
+    const data = req.body;
+    const one = await users.update(uid, data);
     return res.json({
       statusCode: 200,
-      response: "update: " + response,
+      response: one,
     });
   } catch (error) {
     return next(error);
@@ -59,10 +91,10 @@ usersRouter.put("/:uid/:email", async (req, res, next) => {
 usersRouter.delete("/:uid", async (req, res, next) => {
   try {
     const { uid } = req.params;
-    const response = await users.removeUserById(uid);
+    const one = await users.destroy(uid);
     return res.json({
       statusCode: 200,
-      response,
+      response: one,
     });
   } catch (error) {
     return next(error);
