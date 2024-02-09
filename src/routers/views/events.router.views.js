@@ -1,11 +1,12 @@
 import { Router } from "express";
-import events from  "../../data/fs/events.fs.js"
+//import events from  "../../data/fs/events.fs.js"
+import {events} from "../../data/mongo/manager.mongo.js"
 
 const eventsRouter = Router()
 
 eventsRouter.get('/' ,async(req, res, next) => {
     try {
-        const all = await events.readEvents()
+        const all = await events.read({})
         return res.render('events', {events: all})
 
 

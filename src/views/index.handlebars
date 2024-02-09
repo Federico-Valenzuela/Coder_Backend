@@ -20,27 +20,16 @@ para loopear la sintaxis de each de hbs
         </p>
     </div>
     <div><p class="d-flex flex-wrap justify-content-evenly">Mira todos nuestro productos al mejor precio!</p></div>
-    {{!-- <h3>{{date}}</h3> --}}
-
-    {{!-- {{#if details}}
-    <p>{{details}}</p>
-    {{else}}
-    <p>Mira todos nuestro productos al mejor precio!</p>    
-    {{/if}} --}}
-
-
-
-
-
+   
     
     <div class= 'd-flex flex-wrap justify-content-evenly'>
     {{#each products}}
 <div class="card" style="width: 18rem;">
-  <img src="{{this.photo}}" class="card-img-top" alt="...">
+  <img src="{{products.photo}}" class="card-img-top" alt="...">
   <div class="card-body">
-    <h5 class="card-title">{{this.title}}</h5>
-    <p class="card-text">camiseta</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+    <h5 class="card-title">{{products.title}}</h5>
+    <p class="card-text">Camiseta</p>
+    <a href="#" class="btn btn-primary">Agregar</a>
   </div>
 </div>
 {{/each}}
