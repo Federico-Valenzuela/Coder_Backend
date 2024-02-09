@@ -24,7 +24,7 @@ usersRouter.post("/" ,async (req, res, next) => {
 usersRouter.get("/", async (req, res, next) => {
   try {
     const orderAndPaginate = {
-      limit: req.query.limit || 3,
+      limit: req.query.limit || 10,
       page: req.query.page || 1,
       sort:{ name: 1}
       
