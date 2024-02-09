@@ -8,10 +8,17 @@ productsRouter.get('/' ,async(req, res, next) => {
     try {
         const all = await products.read({})
         console.log(all)
-        const objetoDeArray = all.docs
-        console.log(objetoDeArray)
+        const productosFiltrados = all.docs.map((producto) => ({
+
+            title: producto.title,
+            
+            photo: producto.photo,
+            
+            
+            
+            }));
        
-        return res.render('home', {products: objetoDeArray})
+        return res.render('home', {pr: productosFiltrados})
 
 
     } catch (error) {
@@ -22,8 +29,17 @@ productsRouter.get('/' ,async(req, res, next) => {
 productsRouter.get('/real', async(req, res, next) => {
     try {
         const all = await products.read({})
+        const productosFiltrados = all.docs.map((producto) => ({
 
-        return res.render('real', {products: all})
+            title: producto.title,
+            
+            photo: producto.photo,
+            
+            
+            
+            }));
+
+        return res.render('real', {pr: productosFiltrados})
     } catch (error) {
         next(error)
     }

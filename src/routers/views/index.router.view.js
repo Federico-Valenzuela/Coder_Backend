@@ -8,11 +8,17 @@ const viewsRouter = Router()
 viewsRouter.get('/', async (req,res,next)=>{
     try {
         const all = await products.read({})
-        console.log(all)
-        const objetoDeArray = all.docs
-        console.log(objetoDeArray)
-       
-        return res.render('index', {products: objetoDeArray})
+        //console.log(all)
+        const productosFiltrados = all.docs.map((producto) => ({
+
+            title: producto.title,
+            
+            photo: producto.photo,
+            
+            
+            
+            }));
+        return res.render('index', {pr: productosFiltrados})
     } catch (error) {
         next(error);
 
