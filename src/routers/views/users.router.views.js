@@ -9,6 +9,7 @@ usersRouter.use("/:uid", (req, res, next) => {
   try {
     const { uid } = req.params
     const one = users.readOne(uid)
+    console.log('soy one',one)
     if (!one) {
       return res.render('notFound', {not: 'user'})
     }
